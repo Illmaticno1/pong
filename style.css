@@ -1,0 +1,89 @@
+body
+{
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding-top: 30px;
+	background-color: darkred;
+}
+
+#container
+{
+	position: relative;
+	height: 400px;
+	width: 60%;
+	margin-left: 20%;
+	background-color: grey;
+	border-radius: 10px;
+	border: 1px solid black;
+	overflow: hidden;
+}
+
+#ball
+{
+	position: absolute;
+	height: 20px;
+	width: 20px;
+	background-color: white;
+	top: 30%;
+	left: 50%;
+	border-radius: 100%;
+}
+
+.paddle
+{
+	position: absolute;
+	height: 20px;
+	width: 150px;
+	background-color: white;
+	left: 40%;
+}
+
+#paddle_1
+{
+
+
+	bottom: 0;
+	background-color: red;
+	margin-bottom: 1px;
+	border-top-right-radius: 15px;
+	border-top-left-radius: 15px;
+	border-top: 1px solid black;
+	border-bottom: 1px solid white;
+}
+
+#paddle_2
+{
+	top: 0;
+	background-color: blue;
+	border-bottom-right-radius: 15px;
+	border-bottom-left-radius: 15px;
+	margin-top: 1px;
+	border-bottom: 1px solid black;
+	border-top: 1px solid white;
+}
+
+#restart_div
+{
+	display: none;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background-color: green;
+	color: white;
+	font-family: sans-serif;
+	font-size: 40px;
+	text-align: center;
+}
+
+
+#restart
+{
+	/* border: none; */
+	padding: 25px;
+	margin-top: 50px;
+	color: white;
+	background-color: red;
+	font-size: 30px;
+
+}
