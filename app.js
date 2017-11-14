@@ -8,9 +8,10 @@ $(document).ready( () => {
   let paddleOne = $('#paddle_1');
   let paddleTwo = $('#paddle_2');
   let ball = $('#ball');
-
+  let downward = true;
+  let upward = false;
   let top = 6;
-  let moveBall = true;
+
 
   let p = ball;
   let t = paddleOne;
@@ -96,54 +97,62 @@ $(document).ready( () => {
 
     // game start function
     let play = () => {
-      if(detectCollisons(t, p))
-      {
-        up();
-        console.log('yes');
-      }
+      detectCollisons();
+      down();
 
-      if(moveBall === true)
-      {
-        down();
-      }
-      else
-      {
-        up();
-      }
-      setInterval(play, 2000);
+      setInterval(play, 1000);
     };
 
 
     // ball movement functions
     let down = () => {
       // console.log(ball);
-      ball.css('top', parseInt(ball.css('top')) + 40);
+      ball
+      ball.css('top', parseInt(ball.css('top')) + top);
+      downward = true;
     }
 
     let up = () => {
       ball.css('top', parseInt(ball.css('top')) - top);
+      upward = true;
     }
 
-    let detectCollisons = () => {
-      // console.log(t.position().top);
-      console.log(p.position().top);
-      if((t.position().top < p.position().top)
-       &&
-       (t.position().left < p.position().left)
-        &&
-        (t.position().left + t.width() > p.position().left + p.width())){
-        console.log('contact');
+    let stopIt = () => {
+      ball.css('top', parseInt(ball.css('top')) - 0);
+      changeDirection();
+    }
 
+
+    // collision detection (works)
+    let detectCollisons = () => {
+      // console.log('paddle:' t.position());
+      // console.log(t.position().top);
+      console.log(p.position());
+      // console.log(p.position().top);
+
+      if(((t.position().top) < p.position().top)
+      &&
+      (t.position().left < p.position().left)
+      &&
+      (t.position().left + t.width() > p.position().left + p.width())){
         up();
+        // console.log('contact');
+
+        stopIt();
+
       }
     }
-    // let changeDirection = () => {
-    //   if (down === true) {
-    //     up();
-    //   } else if (up === true){
-    //     down();
-    //   }
-    // }
+
+
+
+    // unfinsihed
+    let changeDirection = () => {
+      if (downward === true) {
+        up();
+      } else if (upward === true){
+        down();
+      }
+    }
 
     play();
 
