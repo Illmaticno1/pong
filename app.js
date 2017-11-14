@@ -3,6 +3,7 @@
 
 $(document).ready( () => {
 
+  let pw, ph, px, py, tw, th, tx, ty;
   let paddleOne = $('#paddle_1');
   let paddleTwo = $('#paddle_2');
   let ball = $('#ball');
@@ -10,10 +11,29 @@ $(document).ready( () => {
   let top = 6;
   let moveBall = true;
 
-  
+  let p = ball;
+  let t = paddleOne;
 
-console.log(paddleOne.css('left'));
+
   //  global functions used for call backs
+  let detectCollisons = () => {
+
+      pw = p.offsetWidth;
+      ph = p.offsetHeight;
+      px = p.offsetLeft;
+      py = p.offsetTop;
+      tw = t.offsetWidth;
+      th = t.offsetHeight;
+      tx = t.offsetLeft;
+      ty = t.offsetTop;
+
+      if((px+pw) > tx && px < (tx+tw) && (py+ph) > ty && py < (ty+th)){
+        console.log('collision detected');
+      }
+      window.requestAnimationFrame(detectCollisons);
+  }
+
+
 
   let left_p1 = () => {
     if (parseInt(paddleOne.css('left')) > 0) {
@@ -88,23 +108,32 @@ console.log(paddleOne.css('left'));
 
     let play = () => {
 
-      if(moveBall === true){
+      if(detectCollisons(t, p))
+      {
+        up();
+        console.log('yes');
+      }
+      if(moveBall === true)
+      {
         down();
-      } else {
+      }
+      else
+      {
         up();
       }
-      setInterval(play);
+      setInterval(play), 1000;
     };
+
+
 
     let down = () => {
       // console.log(ball);
       ball.css('top', parseInt(ball.css('top')) + top);
     }
-
-    // let up = () => {
-    //   ball.css('top', parseInt(ball.css('top')) - top);
-    // }
-    // play();
+    let up = () => {
+      ball.css('top', parseInt(ball.css('top')) - top);
+    }
+    play();
 
 
 
