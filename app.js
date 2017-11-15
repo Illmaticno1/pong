@@ -1,5 +1,3 @@
-
-
 $(document).ready( () => {
 
   // global variables
@@ -17,6 +15,8 @@ $(document).ready( () => {
   let t2 = paddleTwo;
   let height = paddleTwo.height();
   let conHeight = $('#container').height();
+  let ball_lOrR;
+  let angle;
   // console.log(t.position().left);
   // console.log(t.width());
   // console.log(p.position().left + t.width());
@@ -110,12 +110,21 @@ $(document).ready( () => {
               (t.position().left + t.width() > p.position().left + p.width()))
               {
                 paddleOne.css('background-color', 'green');
-                // console.log('contact');
+
                 downward = false;
+                // find middle of ball
+                ball_middle = parseInt(p.css('left')) + p.width() / 2;
+                // find middle of paddle
+                paddle_middle = parseInt(t.css('left')) + t.width() /2;
+                // where does teh ball hit?
+                ball_lOrR = (ball_middle > paddle_middle ? 'right':'left');
+                // create new angle
+                angle = parseInt(Math.abs(paddle_middle - ball_middle) / 12);
                 // console.log(downward);
-                // stopIt();
-                // console.log(ball.position().top);
+
                 changeDirection();
+                stopIt();
+                reset();
               }
             }
             // /////////// doesnt work /////////////////////////////////
@@ -134,12 +143,20 @@ $(document).ready( () => {
               {
                 // console.log('inside of if statement');
                 paddleTwo.css('background-color', 'green');
-                // console.log('contact');
+
                 downward = true;
-                // console.log(downward);
-                // stopIt();
-                // console.log(ball.position().top);
+                // find middle of ball
+                ball_middle = parseInt(p.css('left')) + p.width() / 2;
+                // find middle of paddle
+                paddle_middle = parseInt(t2.css('left')) + t2.width() /2;
+                // where does teh ball hit?
+                ball_lOrR = (ball_middle > paddle_middle ? 'right':'left');
+                // create new angle
+                angle = parseInt(Math.abs(paddle_middle - ball_middle) / 12);
+                // console.log("upward");
                 changeDirection();
+                stopIt();
+                reset();
               }
             }
             // console.log("paddle two height: " + t2.height());
@@ -153,15 +170,16 @@ $(document).ready( () => {
               {
                 // alert('player 2 scores!!')
 
-                player2++;
+                player2 += 1;
+                $('#player2').append($('<div>')).text(player2);
+                reset();
                 // reset();
                 // console.log("player 2: " + player2);
-              };
-
-              if (p.position().top >= container.height() - container.height())
+              } else if (parseInt(p.css('top')) <= 0)
               {
-
-                player1++;
+                player1 += 1;
+                $('#player1').append($('<div>')).text(player1);
+                reset();
                 // console.log("player 1: " + player1);
               }
 
@@ -177,33 +195,17 @@ $(document).ready( () => {
               detectCollisons1();
               // down();
               changeDirection();
-              setInterval(play, 750);
+              setInterval(play, 750, 'slow');
             };
 
 ////////////////////////////////// unfinsihed///////////////////////////
             let changeDirection = () => {
               // console.log('change direction is running');
               if (downward === false) {
-                // find middle of ball
-                ball_middle = parseInt(p.css('left')) + p.width() / 2;
-                // find middle of paddle
-                paddle_middle = parseInt(t.css('left')) + t.width() /2;
-                // where does teh ball hit?
-                ball_lOrR = (ball_middle > paddle_middle ? 'right':'left');
-                // create new angle
-                angle = parseInt(Math.abs(paddle_middle - ball_middle) / 4);
-                // console.log(downward);
+
                 up();
               } else if (downward === true){
-                // find middle of ball
-                ball_middle = parseInt(p.css('left')) + p.width() / 2;
-                // find middle of paddle
-                paddle_middle = parseInt(t2.css('left')) + t2.width() /2;
-                // where does teh ball hit?
-                ball_lOrR = (ball_middle > paddle_middle ? 'right':'left');
-                // create new angle
-                angle = parseInt(Math.abs(paddle_middle - ball_middle) / 4);
-                // console.log("upward");
+
                 down();
               }
             }
@@ -238,11 +240,14 @@ $(document).ready( () => {
 
             // reset function to reset ball in middle of screen
             let reset = () => {
-              ball.css('top', '50%');
+              // console.log('working');
+              p.css('top', '50%');
+              clearInterval(play);
+
             }
-            // let stopIt = () => {
-            //   ball.css('top', parseInt(ball.css('top')) + 0);
-            // }
+            let stopIt = () => {
+              ball.css('top', parseInt(ball.css('top')) + 0);
+            }
             play();
 
 
