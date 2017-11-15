@@ -10,6 +10,8 @@ $(document).ready( () => {
   let container = $('#container');
   let player1 = 'Player 1';
   let player2 = 'Player 2';
+  let pl1 = 0;
+  let pl2 = 0;
   let p = ball;
   let t = paddleOne;
   let t2 = paddleTwo;
@@ -107,8 +109,6 @@ $(document).ready( () => {
               &&
               (t.position().left + t.width() > p.position().left + p.width()))
               {
-                // paddleOne.css('background-color', 'green');
-
                 downward = false;
                 // find middle of ball
                 ball_middle = parseInt(p.css('left')) + p.width() / 2;
@@ -118,18 +118,10 @@ $(document).ready( () => {
                 ball_lOrR = (ball_middle > paddle_middle ? 'right':'left');
                 // create new angle
                 angle = parseInt(Math.abs(paddle_middle - ball_middle) / 12);
-                // console.log(downward);
-
-                // changeDirection();
-
               }
             }
             // /////////// doesnt work /////////////////////////////////
             let detectCollisons2 = () => {
-              // console.log('detect collision 2 is running');
-              // console.log(p.position().top);
-              // console.log(t2.position().top + t2.height);
-              // console.log(t2.height());
               if(
                 ((t2.position().top) + t2.height() > p.position().top)
                 &&
@@ -138,41 +130,33 @@ $(document).ready( () => {
                 (t2.position().left + t2.width() > p.position().left + p.width())
               )
               {
-                // console.log('inside of if statement');
-                // paddleTwo.css('background-color', 'green');
-
                 downward = true;
                 // find middle of ball
                 ball_middle = parseInt(p.css('left')) + p.width() / 2;
                 // find middle of paddle
                 paddle_middle = parseInt(t2.css('left')) + t2.width() /2;
-                // where does teh ball hit?
+                // where does the ball hit?
                 ball_lOrR = (ball_middle > paddle_middle ? 'right':'left');
                 // create new angle
                 angle = parseInt(Math.abs(paddle_middle - ball_middle) / 12);
-                // console.log("upward");
-                // changeDirection();
 
               }
             }
-            // console.log("paddle two height: " + t2.height());
-            // create function to increment players scores
-            // console.log("container: " + container.position().top);
 
 /////////////////////// not showing an alert???/////////////////////////
 
 
 ///////////////////////// game start function///////////////////////////
 ////////////////////////////////////////////////////////////////////////
-            let play = () => {
-              // console.log(t2.position().top + t2.height());
-              // console.log(p.position());
+          // THIS FIXED PLAYER TWO SCORE INTERVAL BUT NOT PLAYER ONE??
+            let interval = null;
 
+            let play = () => {
               detectCollisons2();
               detectCollisons1();
-              // down();
+
               changeDirection();
-              setInterval(play, 1750, 'linear');
+            interval = setInterval(play, 200, 'linear');
             };
 
 ////////////////////////////////// unfinsihed///////////////////////////
@@ -217,45 +201,53 @@ $(document).ready( () => {
 
             // reset function to reset ball in middle of screen
             let reset = () => {
-              console.log('working');
-              // p.detach();
-              // p.css('top', parseInt(ball.css('top')) + 0);
-
-              // p.css('top', '50%');
-              $('#restart_div').attr('display', '');
+              // console.log('working');
+              $('#restart_div').css('display', 'inline-block');
+              $('#p1score').html('<h2>' + pl1 + '</h2>').css('margin', 'auto');
+              $('#p2score').html('<h2>' + pl2 + '</h2>').css('margin', 'auto');
+              ball.detach();
+              $('#ball1').css({'display': 'inline-block','position': '50%'});
+              // console.log(p.position());
+              // ball.appendTo('#container').css({'top': '50%'});
 
             }
 
 
             let stopIt = () => {
-              p.detach();
-              p.css('top', parseInt(ball.css('top')) + 0);
+              // p.detach();
+              // p.css('top', parseInt(ball.css('top')) + 0);
+
             }
 
             let score = () => {
 
               if (p.position().top >= container.height())
               {
-                // alert('player 2 scores!!')
-                // clearInterval(play);
                 // player2 += 1;
                 $('#player2').append($('<div>')).html('<h2>' + player2 + " wins the round" + '</h2>');
-                // reset();
-                // reset();
-                // console.log("player 2: " + player2);
-              } else if ((parseInt(p.css('top')) <= 0))
+                pl2++;
+                reset();
+                clearInterval(interval);
+              }
+              if (parseInt(p.css('top')) <= 0)
               {
-                // clearInterval(play);
-                // player1 += 1;
+
                 $('#player1').append($('<div>')).html('<h2>' + player1 + " wins the round" + '</h2>');
-                // reset();
-                // console.log("player 1: " + player1);
+                pl1++;
+                reset();
+                clearInterval(interval);
               }
 
-            }
+            };
+
+            let $restart_div = $('#restart_div');
+            $('#restart').click(() => {
+              $(document).location.reload();
+            })
+
+            $('#round').click(() => {
+              $restart_div.css({'display': 'none'});
+            })
             play();
-            reset();
-
-
 
           });
