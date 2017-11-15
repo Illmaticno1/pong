@@ -8,8 +8,8 @@ $(document).ready( () => {
   let downward = true;
   let top = 6;
   let container = $('#container');
-  let player1 = 0;
-  let player2 = 0;
+  let player1 = 'Player 1';
+  let player2 = 'Player 2';
   let p = ball;
   let t = paddleOne;
   let t2 = paddleTwo;
@@ -109,7 +109,7 @@ $(document).ready( () => {
               &&
               (t.position().left + t.width() > p.position().left + p.width()))
               {
-                paddleOne.css('background-color', 'green');
+                // paddleOne.css('background-color', 'green');
 
                 downward = false;
                 // find middle of ball
@@ -122,9 +122,8 @@ $(document).ready( () => {
                 angle = parseInt(Math.abs(paddle_middle - ball_middle) / 12);
                 // console.log(downward);
 
-                changeDirection();
-                stopIt();
-                reset();
+                // changeDirection();
+
               }
             }
             // /////////// doesnt work /////////////////////////////////
@@ -142,7 +141,7 @@ $(document).ready( () => {
               )
               {
                 // console.log('inside of if statement');
-                paddleTwo.css('background-color', 'green');
+                // paddleTwo.css('background-color', 'green');
 
                 downward = true;
                 // find middle of ball
@@ -154,9 +153,8 @@ $(document).ready( () => {
                 // create new angle
                 angle = parseInt(Math.abs(paddle_middle - ball_middle) / 12);
                 // console.log("upward");
-                changeDirection();
-                stopIt();
-                reset();
+                // changeDirection();
+
               }
             }
             // console.log("paddle two height: " + t2.height());
@@ -164,26 +162,7 @@ $(document).ready( () => {
             // console.log("container: " + container.position().top);
 
 /////////////////////// not showing an alert???/////////////////////////
-            let score = () => {
 
-              if (p.position().top >= container.height())
-              {
-                // alert('player 2 scores!!')
-
-                player2 += 1;
-                $('#player2').append($('<div>')).text(player2);
-                reset();
-                // reset();
-                // console.log("player 2: " + player2);
-              } else if (parseInt(p.css('top')) <= 0)
-              {
-                player1 += 1;
-                $('#player1').append($('<div>')).text(player1);
-                reset();
-                // console.log("player 1: " + player1);
-              }
-
-            }
 
 ///////////////////////// game start function///////////////////////////
 ////////////////////////////////////////////////////////////////////////
@@ -195,7 +174,7 @@ $(document).ready( () => {
               detectCollisons1();
               // down();
               changeDirection();
-              setInterval(play, 750, 'slow');
+              setInterval(play, 750);
             };
 
 ////////////////////////////////// unfinsihed///////////////////////////
@@ -241,15 +220,43 @@ $(document).ready( () => {
             // reset function to reset ball in middle of screen
             let reset = () => {
               // console.log('working');
+              p.detach();
+              // p.css('top', parseInt(ball.css('top')) + 0);
+
               p.css('top', '50%');
-              clearInterval(play);
+              $('#restart_div').attr('display', '');
 
             }
+
+
             let stopIt = () => {
-              ball.css('top', parseInt(ball.css('top')) + 0);
+              p.detach();
+              p.css('top', parseInt(ball.css('top')) + 0);
+            }
+
+            let score = () => {
+
+              if (p.position().top >= container.height())
+              {
+                // alert('player 2 scores!!')
+                // clearInterval(play);
+                // player2 += 1;
+                $('#player2').append($('<div>')).html('<h2>' + player2 + " wins the round" + '</h2>');
+                // reset();
+                // reset();
+                // console.log("player 2: " + player2);
+              } else if ((parseInt(p.css('top')) <= 0))
+              {
+                // clearInterval(play);
+                // player1 += 1;
+                $('#player1').append($('<div>')).html('<h2>' + player1 + " wins the round" + '</h2>');
+                // reset();
+                // console.log("player 1: " + player1);
+              }
+
             }
             play();
-
+            // reset();
 
 
 
