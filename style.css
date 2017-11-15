@@ -14,7 +14,7 @@ body
 	position: relative;
 	height: 400px;
 	width: 60%;
-	margin-left: 20%;
+	margin: auto;
 	background-color: grey;
 	border-radius: 10px;
 	border: 1px solid black;
@@ -84,7 +84,7 @@ h2{
 {
 	position: absolute;
 	height: 20px;
-	width: 150px;
+	width: 200px;
 	background-color: white;
 	left: 40%;
 }

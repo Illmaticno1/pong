@@ -36,7 +36,7 @@ $(document).ready( () => {
 
     // move paddle_1 right
     let right_p1 = () => {
-      if (parseInt(paddleOne.css('left')) < 310) {
+      if (parseInt(paddleOne.css('left')) < 690) {
         $('#paddle_1').animate(
           {left: '+=15'},
           {duration: 1});
@@ -54,7 +54,7 @@ $(document).ready( () => {
 
         // move paddle_2 right
         let right_p2 = () => {
-          if (parseInt(paddleTwo.css('left')) < 310) {
+          if (parseInt(paddleTwo.css('left')) < 690) {
             $('#paddle_2').animate(
               {left: '+=15'},
               {duration: 1});
@@ -172,37 +172,64 @@ $(document).ready( () => {
             let play = () => {
               // console.log(t2.position().top + t2.height());
               // console.log(p.position());
+
               detectCollisons2();
               detectCollisons1();
               // down();
               changeDirection();
-              setInterval(play, 250);
+              setInterval(play, 750);
             };
 
 ////////////////////////////////// unfinsihed///////////////////////////
             let changeDirection = () => {
-              console.log('change direction is running');
+              // console.log('change direction is running');
               if (downward === false) {
-                console.log(downward);
+                // find middle of ball
+                ball_middle = parseInt(p.css('left')) + p.width() / 2;
+                // find middle of paddle
+                paddle_middle = parseInt(t.css('left')) + t.width() /2;
+                // where does teh ball hit?
+                ball_lOrR = (ball_middle > paddle_middle ? 'right':'left');
+                // create new angle
+                angle = parseInt(Math.abs(paddle_middle - ball_middle) / 4);
+                // console.log(downward);
                 up();
               } else if (downward === true){
-                console.log("upward");
+                // find middle of ball
+                ball_middle = parseInt(p.css('left')) + p.width() / 2;
+                // find middle of paddle
+                paddle_middle = parseInt(t2.css('left')) + t2.width() /2;
+                // where does teh ball hit?
+                ball_lOrR = (ball_middle > paddle_middle ? 'right':'left');
+                // create new angle
+                angle = parseInt(Math.abs(paddle_middle - ball_middle) / 4);
+                // console.log("upward");
                 down();
               }
             }
 
             // // ball movement functions
             let down = () => {
-              console.log("========================");
+              // console.log("========================");
               ball.css('top', parseInt(ball.css('top')) + top);
+              if (ball_lOrR === 'right') {
+                p.css('left', parseInt(p.css('left')) + angle);
+              } else {
+                p.css('left', parseInt(p.css('left')) - angle);
+              }
               detectCollisons1();
               score();
             }
 
             let up = () => {
-              console.log("++++++++++++++++++++++");
+              // console.log("++++++++++++++++++++++");
 
               ball.css('top', parseInt(ball.css('top')) - top);
+              if (ball_lOrR === 'right') {
+                p.css('left', parseInt(p.css('left')) + angle);
+              } else {
+                p.css('left', parseInt(p.css('left')) - angle);
+              }
               // console.log("ball: " + ball.position().top);
               // console.log('paddle 2: ' + paddleTwo.position().top);
               detectCollisons2();
