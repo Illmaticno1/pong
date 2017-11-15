@@ -17,9 +17,7 @@ $(document).ready( () => {
   let conHeight = $('#container').height();
   let ball_lOrR;
   let angle;
-  // console.log(t.position().left);
-  // console.log(t.width());
-  // console.log(p.position().left + t.width());
+
 
 
 //////////////////////////paddle movement/////////////////////////////
@@ -116,7 +114,7 @@ $(document).ready( () => {
                 ball_middle = parseInt(p.css('left')) + p.width() / 2;
                 // find middle of paddle
                 paddle_middle = parseInt(t.css('left')) + t.width() /2;
-                // where does teh ball hit?
+                // where does the ball hit?
                 ball_lOrR = (ball_middle > paddle_middle ? 'right':'left');
                 // create new angle
                 angle = parseInt(Math.abs(paddle_middle - ball_middle) / 12);
@@ -174,7 +172,7 @@ $(document).ready( () => {
               detectCollisons1();
               // down();
               changeDirection();
-              setInterval(play, 750);
+              setInterval(play, 1750, 'linear');
             };
 
 ////////////////////////////////// unfinsihed///////////////////////////
@@ -219,11 +217,11 @@ $(document).ready( () => {
 
             // reset function to reset ball in middle of screen
             let reset = () => {
-              // console.log('working');
-              p.detach();
+              console.log('working');
+              // p.detach();
               // p.css('top', parseInt(ball.css('top')) + 0);
 
-              p.css('top', '50%');
+              // p.css('top', '50%');
               $('#restart_div').attr('display', '');
 
             }
@@ -256,7 +254,7 @@ $(document).ready( () => {
 
             }
             play();
-            // reset();
+            reset();
 
 
 

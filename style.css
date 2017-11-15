@@ -51,6 +51,7 @@ h2{
 	height: 80%;
 	border: 1px solid grey;
 	border-radius: 10px;
+	background-color: red;
 }
 
 #player2 {
@@ -62,6 +63,7 @@ h2{
 	height: 80%;
 	border: 1px solid grey;
 	border-radius: 10px;
+	background-color: blue;
 }
 
 #ball
