@@ -7,16 +7,20 @@ $(document).ready( () => {
   let paddleOne = $('#paddle_1');
   let paddleTwo = $('#paddle_2');
   let ball = $('#ball');
-  let downward = true;
+  let downward = 'down';
   let top = 6;
   let container = $('#container');
-  let player1 = 0;
-  let player2 = 0;
+
   let p = ball;
   let t = paddleOne;
   let t2 = paddleTwo;
   let height = paddleTwo.height();
-  let conHeight = $('#container').height();
+  let collision1;
+  let collision2;
+  let bouncetime = 1000;
+  let ballheight = 280;
+  let ballsize = 80;
+
   // console.log(t.position().left);
   // console.log(t.width());
   // console.log(p.position().left + t.width());
@@ -111,112 +115,93 @@ $(document).ready( () => {
               {
                 paddleOne.css('background-color', 'green');
                 // console.log('contact');
-                downward = false;
-                // console.log(downward);
+                // downward = false;
+                collision1 = true;
+                console.log(downward);
                 // stopIt();
-                // console.log(ball.position().top);
+                console.log(ball.position().top);
                 changeDirection();
               }
             }
             // /////////// doesnt work /////////////////////////////////
             let detectCollisons2 = () => {
-              // console.log('detect collision 2 is running');
-              // console.log(p.position().top);
-              // console.log(t2.position().top + t2.height);
-              // console.log(t2.height());
               if(
-                ((t2.position().top) + t2.height() > p.position().top)
+                (t2.position().top + t2.height > p.position().top)
                 &&
                 (t2.position().left < p.position().left)
                 &&
                 (t2.position().left + t2.width() > p.position().left + p.width())
               )
               {
-                // console.log('inside of if statement');
                 paddleTwo.css('background-color', 'green');
-                // console.log('contact');
-                downward = true;
-                // console.log(downward);
-                // stopIt();
-                // console.log(ball.position().top);
+                console.log('contact');
+                // downward = false;
+                collision2 = true;
+                console.log(downward);
+                stopIt();
+                console.log(ball.position().top);
                 changeDirection();
               }
             }
-            // console.log("paddle two height: " + t2.height());
+            console.log("paddle two height: " + t2.height());
             // create function to increment players scores
-            // console.log("container: " + container.position().top);
+            console.log("container: " + container.position().top);
 
-/////////////////////// not showing an alert???/////////////////////////
+//////////////////////// not showing an alert???/////////////////////////
             let score = () => {
 
               if (p.position().top >= container.height())
               {
-                // alert('player 2 scores!!')
-
-                player2++;
-                // reset();
-                // console.log("player 2: " + player2);
+                alert('player 1 scores!!')
               };
-
-              if (p.position().top >= container.height() - container.height())
-              {
-
-                player1++;
-                // console.log("player 1: " + player1);
-              }
-
             }
 
-///////////////////////// game start function///////////////////////////
-////////////////////////////////////////////////////////////////////////
-            let play = () => {
-              // console.log(t2.position().top + t2.height());
-              // console.log(p.position());
-              detectCollisons2();
-              detectCollisons1();
-              // down();
-              changeDirection();
-              setInterval(play, 250);
-            };
+////////////////////////// game start function///////////////////////////
+/////////////////////////////////////////////////////////////////////////
+let down = () => {
+  ball.css('top', parseInt(ball.css('top')) + top);
+  downward = true;
+}
 
-////////////////////////////////// unfinsihed///////////////////////////
-            let changeDirection = () => {
-              console.log('change direction is running');
-              if (downward === false) {
-                console.log(downward);
+let up = () => {
+  ball.css('top', parseInt(ball.css('top')) - top);
+  downward = false;
+}
+
+
+            let repeat = () => {
+              if (downward === 'down'){
+                detectCollisons1
+                down();
+                setInterval(repeat, 500)
+              } else {
                 up();
-              } else if (downward === true){
-                console.log("upward");
+              }
+              if(collision1 === true){
+                up();
+              } else {
                 down();
               }
-            }
+
+
+
+              animate = requestAnimationFrame(repeat)
+            };
+            repeat();
+/////////////////////////////////// unfinsihed///////////////////////////
+
+
+            // let changeDirection = () => {
+            //   if (downward === false) {
+            //     // up();
+            //   } else if (downward === true){
+            //     down();
+            //   }
+            // }
 
             // // ball movement functions
-            let down = () => {
-              console.log("========================");
-              ball.css('top', parseInt(ball.css('top')) + top);
-              detectCollisons1();
-              score();
-            }
 
-            let up = () => {
-              console.log("++++++++++++++++++++++");
-
-              ball.css('top', parseInt(ball.css('top')) - top);
-              // console.log("ball: " + ball.position().top);
-              // console.log('paddle 2: ' + paddleTwo.position().top);
-              detectCollisons2();
-              score();
-            }
-
-            // reset function to reset ball in middle of screen
-            let reset = () => {
-              ball.css('top', '50%');
-            }
-            // let stopIt = () => {
-            //   ball.css('top', parseInt(ball.css('top')) + 0);
-            // }
-            play();
+            // play();
 
 
 
