@@ -1,11 +1,11 @@
 $(document).ready( () => {
 
   // global variables
-  // let pw, ph, px, py, tw, th, tx, ty; unused variables
+  
   let paddleOne = $('#paddle_1');
   let paddleTwo = $('#paddle_2');
   let ball = $('#ball');
-  let ball1 = $('.ball');
+  let ball1 = $('#ball1');
   let downward = true;
   let top = 1;
   let container = $('#container');
@@ -67,8 +67,9 @@ $(document).ready( () => {
             $(('#paddle').css('left') +=0);
           }
 
+////////////////////////////////////////////////////////////////////////
 
-          ////////////////////////event listener (keypress)///////////////////////
+////////////////////////event listener (keypress)///////////////////////
 
 
           // key up and key down function to move player divs
@@ -98,8 +99,9 @@ $(document).ready( () => {
           });
 
 
-
-          ////////////////////////////collision detection////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////collision detection////////////////////////
+////////////////////////////////////////////////////////////////////////
 
           // collision detection (works)
           let detectCollisons1 = () => {
@@ -153,6 +155,7 @@ $(document).ready( () => {
               }
             }
 
+////////////////////////////////////////////////////////////////////////
 ///////////////////////// game start function///////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
@@ -172,10 +175,12 @@ $(document).ready( () => {
 
               interval = setInterval(play, 500, 'linear');
             };
+// /////////////////////////////////////////////////////////////////////
+// round 2 function (inoperable)
+// /////////////////////////////////////////////////////////////////////
 
             let round2 = () => {
-              console.log(container);
-              ball1.appendTo(container).css({'display': 'block','position': '50%'});
+              // console.log(container);
               detectCollisons2();
               detectCollisons1();
               changeDirection1();
@@ -186,6 +191,11 @@ $(document).ready( () => {
 
               interval1 = setInterval(play, 100, 'linear');
             }
+
+
+// /////////////////////////////////////////////////////////////////////
+// function used to change direction of the ball after a collision is detected
+////////////////////////////////////////////////////////////////////////
 
             let changeDirection = () => {
               // console.log('change direction is running');
@@ -198,6 +208,10 @@ $(document).ready( () => {
               }
             }
 
+// /////////////////////////////////////////////////////////////////////
+// function used to change direction of the ball after a collision is detected (round 2 inoperable)
+////////////////////////////////////////////////////////////////////////
+
             let changeDirection1 = () => {
               // console.log('change direction is running');
               if (downward === false) {
@@ -209,7 +223,11 @@ $(document).ready( () => {
               }
             }
 
+////////////////////////////////////////////////////////////////////////
             // // ball movement functions
+////////////////////////////////////////////////////////////////////////
+
+
             let down = () => {
               // console.log("========================");
               p.css('top', parseInt(ball.css('top')) + top);
@@ -219,8 +237,11 @@ $(document).ready( () => {
                 p.css('left', parseInt(p.css('left')) - angle);
               }
               detectCollisons1();
-              // score();
             }
+
+///////////////////////////////////////////////////////////////////////
+            // round 2 ball movement function
+////////////////////////////////////////////////////////////////////////
 
             let down1 = () => {
               // console.log("========================");
@@ -233,6 +254,10 @@ $(document).ready( () => {
               detectCollisons1();
               // score();
             }
+
+////////////////////////////////////////////////////////////////////////
+            // ball movement function
+////////////////////////////////////////////////////////////////////////
 
             let up = () => {
               // console.log("++++++++++++++++++++++");
@@ -248,6 +273,9 @@ $(document).ready( () => {
               detectCollisons2();
               // score();
             }
+////////////////////////////////////////////////////////////////////////
+            // round 2 movement function
+////////////////////////////////////////////////////////////////////////
 
             let up1 = () => {
               // console.log("++++++++++++++++++++++");
@@ -263,18 +291,20 @@ $(document).ready( () => {
               detectCollisons2();
               // score();
             }
-
+////////////////////////////////////////////////////////////////////////
             // reset function to set ball in middle of screen
+////////////////////////////////////////////////////////////////////////
+
             let reset = () => {
               // console.log('working');
-              $('#restart_div').css('display', 'inline-block');
+              $('#restart_div').css({'display': 'inline-block', 'z-index': 2});
               $('#p1score').html('<h2>' + pl1 + '</h2>').css('margin', 'auto');
               $('#p2score').html('<h2>' + pl2 + '</h2>').css('margin', 'auto');
               $('#player2').append($('<div>')).html('<h2>' + player2 +'</h2>')
               $('#player1').append($('<div>')).html('<h2>' + player1 +'</h2>')
               ball.css({'position': '50%'});
               ball.detach();
-
+              ball1.appendTo(container).css({'display': 'inline-block','position': '50%'});
               // console.log(p.position());
               // ball.appendTo('#container').css({'top': '50%'});
 
@@ -282,8 +312,9 @@ $(document).ready( () => {
 
 
 
-            /////////////////////////////////////////////////////////////////////
-            //check for score and increments it then calls the reset function//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+//check for score and increments it then calls the reset function//////////////////////////////////////////////////////////////
+
             let score = () => {
 
               if (p.position().top >= container.height())
@@ -307,17 +338,24 @@ $(document).ready( () => {
               }
 
             };
-            ////////////////////////////////////////////////////////////////////////
-            // hidden div for restarting rounds and reseting game board
+////////////////////////////////////////////////////////////////////////
+// hidden div for restarting rounds and reseting game board
+////////////////////////////////////////////////////////////////////////
+
+
             let $restart_div = $('#restart_div');
             $('#restart').click(() => {
               $(document).location.reload();
             })
 
+////////////////////////////////////////////////////////////////////////
+            // button used to start next round
+////////////////////////////////////////////////////////////////////////
+
             $('#round').click(() => {
               round2();
               $restart_div.css({'display': 'none'});
-
+              // ball1.css({'display': 'block','position': '50%'});
               // $('#player1').html('<h2>'
 
             })
