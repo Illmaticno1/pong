@@ -191,8 +191,18 @@ h2{
 
  #p1score{
 	 background-color: rgba(255, 0, 0, .7);
+	 text-align: center;
+ }
+
+ #p1score h2{
+	 margin: auto;
+ }
+
+ #p2score h2{
+	 margin: auto;
  }
 
  #p2score{
 	 background-color: rgba(0, 0, 255, .7);
+	 text-align: center;
  }
