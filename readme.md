@@ -1,6 +1,7 @@
 # Pong
 
-This is a multiplayer game in which two players move their respective div items in order to volley an object past the opposite players boundary. player1 is represented by the color red and player2 will be blue. At the end of each round the score will increment and players wil have the option to restart the game or continue to the next round.
+This is a multiplayer game in which two players move their respective div items in order to volley an object past the opposite players boundary. player1 is represented by the color red and player2 will be blue. At the end of each round the score will increment and players will have the option to restart the game or continue to the next round.
+
 
 ## link
 
