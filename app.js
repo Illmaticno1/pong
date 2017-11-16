@@ -184,7 +184,7 @@ $(document).ready( () => {
                   score()
               };
 
-              interval1 = setInterval(play, 200, 'linear');
+              interval1 = setInterval(play, 100, 'linear');
             }
 
             let changeDirection = () => {
